@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=64.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "ugvu"
+version = "1.0.0"
+description = "Uncertainty-Guided Generative Vision Understanding via Consensus Reasoning"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "UGVU Research Team"},
+]
+
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "pillow>=9.5.0",
+    "pyyaml>=6.0",
+    "matplotlib>=3.7.0",
+    "scikit-learn>=1.3.0",
+    "scikit-image>=0.21.0",
+    "tqdm>=4.65.0",
+    "click>=8.1.0",
+    "httpx>=0.24.0",
+]
+
+[project.scripts]
+ugvu = "ugvu.__main__:cli"
+
+[tool.setuptools.packages.find]
+include = ["ugvu", "ugvu.*"]

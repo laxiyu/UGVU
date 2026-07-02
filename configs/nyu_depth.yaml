@@ -1,0 +1,61 @@
+# NYU Depth V2 — Depth Estimation
+
+experiment_name: ugvu_nyu_depth
+seed: 42
+output_dir: outputs/ugvu_nyu_depth
+
+# --- Model Registry ---
+models:
+  doubao:
+    api_endpoint: "https://ark.cn-beijing.volces.com/api/v3"
+    api_key: "${DOUBAO_API_KEY}"
+    model_version: "doubao-vision-pro-32k"
+    timeout_sec: 90
+    max_retries: 3
+    image_size: [1024, 1024]
+    temperature: 1.0
+
+  qwen:
+    api_endpoint: "https://dashscope.aliyuncs.com/api/v1/services/aigc/image-generation/generation"
+    api_key: "${DASHSCOPE_API_KEY}"
+    model_version: "qwen-image-2.0-pro"
+    api_mode: "generation"
+    timeout_sec: 120
+    max_retries: 3
+    image_size: [1024, 1024]
+    temperature: 1.0
+
+task:
+  task: depth_estimation
+  dataset: nyu_depth_v2
+  data_root: data/nyu_depth_v2
+  num_classes: 1            # continuous depth
+  ignore_index: -1
+  batch_size: 1
+  num_workers: 4
+  max_samples: null
+
+sampling:
+  k_samples: 5
+  parallel: true
+  max_concurrent: 4
+  seed: 42
+  output_dir: outputs/samples
+
+consensus:
+  method: ugcf
+  uncertainty_type: variance
+  weight_temperature: 1.0
+  cross_model_models: [doubao, qwen]
+  iou_threshold: 0.5
+
+calibration:
+  num_bins: 15
+  strategy: quantile
+  metrics: [ece, mce, spearman]
+
+robustness:
+  num_prompt_variants: 50
+  generation_repeats: 20
+  models_to_compare: [doubao, qwen]
+  k_values: [1, 3, 5, 10]

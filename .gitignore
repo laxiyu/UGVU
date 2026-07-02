@@ -1,0 +1,48 @@
+﻿# UGVU .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+pytest-cache-files-*/
+
+# Environment
+.env
+venv/
+.venv/
+
+# IDE / local tool state
+.vscode/
+.idea/
+.reasonix/
+*.swp
+*.swo
+
+# Outputs and datasets
+outputs/
+data/
+
+# Manuscript and paper-only artifacts
+AAAI2027_UGVU/
+AuthorKit27/
+PAPER_*.md
+UGVU_UNIFIED_PAPER.md
+figures/
+scripts/
+*.zip
+
+# Root one-off / legacy scripts not included in the clean code release
+complete_ade20k_gpt_image0.py
+test_qwen_api.py
+test_smoke.py
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
